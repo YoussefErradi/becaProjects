@@ -52,6 +52,7 @@ public class AdminCategories implements Serializable{
 	public void prepareAdd(){
 		addMode=true;
 		editMode=false;
+		categorieToAdd = new Categorie();
 	}
 	public void cancelAdd(){
 		categorieToAdd=new Categorie();

@@ -62,6 +62,7 @@ public class AdminProduits implements Serializable {
     public void prepareAdd(){
         addMode=true;
         editMode=false;
+        produitToAdd = new Produit();
     }
     public void cancelAdd(){
         produitToAdd=new Produit();
