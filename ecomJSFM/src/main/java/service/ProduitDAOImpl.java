@@ -95,7 +95,7 @@ public class ProduitDAOImpl implements Serializable, ProduitDAO{
 			session.delete(produit);
 		}
 		session.getTransaction().commit();
-		logger.info("Product deleted successfully, Product details="+produit);
+		logger.info("Youssef");
 	}
 	
 	

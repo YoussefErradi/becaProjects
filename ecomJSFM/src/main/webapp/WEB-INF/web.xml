@@ -38,7 +38,7 @@
 		</init-param>
 		<init-param>
 			<param-name>uploadDirectory</param-name>
-			<param-value>/home/youssef/Images</param-value>
+			<param-value>/Users/yousseferradi/becaProjects/ecomJSFM/ImagesDiali</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

@@ -17,7 +17,8 @@
                     <p:dataTable id="tblProduits" var="produit" value="#{adminProduits.allProduits}"
                                  resizableColumns="true"
                                  editable="true"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 paginatorTemplate=" {RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
                                  paginator="true" rows="5" style="margin-bottom:20px"
                                  selection="#{adminProduits.selectedProduit}" rowKey="#{produit.id}"
                                  emptyMessage="Aucun Produit enregistré"
@@ -39,6 +40,9 @@
                                   style="width:16px;text-align: center" />
                         <p:column headerText="ID">
                             <h:outputText value="#{produit.id}" />
+                        </p:column>
+                        <p:column headerText="Photo">
+                            <h:graphicImage value="#{produit.photo}" width="50" height="50"/>
                         </p:column>
                         <p:column headerText="Désignation"
                                   filterBy="#{produit.designation}"
@@ -104,7 +108,7 @@
                 </h:form>
             </p:row>
             <p:row id="rowNew" >
-                <h:form id="formNew" rendered="#{adminProduits.addMode}">
+                <h:form id="formNew" rendered="#{adminProduits.addMode}" enctype="multipart/form-data">
                     <p:growl id="msgs" />
                     <p:panel header="Ajout d'un Nouveau Produit">
                         <h:panelGrid columns="2" id="grid">
@@ -128,6 +132,7 @@
 
                             </h:selectOneMenu>
                             <h:outputLabel value="photo : *" for="file_photo" />
+                            <p:fileUpload id="file_photo" value="#{adminProduits.file}" mode="simple" skinSimple="true"/>
                             <p:commandButton id="btn_cancelAdd" value="Annuler"
                                              action="#{adminProduits.cancelAdd}" immediate="true" ajax="false"/>
                             <p:commandButton id="btn_add" value="Ajouter"
@@ -140,4 +145,3 @@
     </ui:define>
 
 </ui:composition>
-

@@ -1,21 +1,21 @@
 .ui-submenu{
-    font-size: 90%!important;
+	font-size: 90%!important;
 }
 .ui-menuitem{
-    font-size: 80%!important;
+	font-size: 80%!important;
 }
 table.zebra tr:nth-child(odd) td {
 	background-color: #dddddd;
 }
 ui-panelgrid>*>tr,
 .ui-panelgrid .ui-panelgrid-cell {
-    border: none!important;
+	border: none!important;
 }
 .ui-datatable tbody td.wrap {
-    white-space: normal;
+	white-space: normal;
 }
 .majMaint {
-    vertical-align: top;
+	vertical-align: top;
 }
 
 .lblSuivi{

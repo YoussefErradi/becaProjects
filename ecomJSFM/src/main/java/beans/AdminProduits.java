@@ -1,6 +1,8 @@
 package beans;
 
-import java.io.Serializable;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +11,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 
 import model.Categorie;
 import model.Produit;
+import org.primefaces.model.file.UploadedFile;
 import service.CategorieDAOImpl;
 import service.ProduitDAOImpl;
 
@@ -23,63 +27,63 @@ public class AdminProduits implements Serializable {
     private List<Produit> filteredProduits;
     private List<Produit> categoryProducts;
     private List<Categorie> allCategories;
-
+    private UploadedFile file;
     private Produit selectedProduit;
     private Produit produitToAdd = new Produit();
     private int produit;
-
-
     private Categorie selectedCategorie;
-
     private ProduitDAOImpl prodDao = new ProduitDAOImpl();
     private boolean editMode = false;
     private boolean addMode = false;
     private CategorieDAOImpl categDao = new CategorieDAOImpl();
-    private ProduitDAOImpl produitService;
     private int categorie;
+    private ProduitDAOImpl produitService = new ProduitDAOImpl();
 
-    {
-        produitService = new ProduitDAOImpl();
-    }
-
-
+    private static final String UPLOAD_DIR = "uploads";
 
     @PostConstruct
     public void init() {
-
         allProduits = getAllProduits();
     }
 
-    public void edit(){
+    public void edit() {
         System.out.println("edit clicked");
-        editMode=true;
-        addMode=false;
-    }
-    public void cancelUpdate(){
-        editMode=false;
+        editMode = true;
+        addMode = false;
     }
 
-    public void prepareAdd(){
-        addMode=true;
-        editMode=false;
-        produitToAdd = new Produit();
+    public void cancelUpdate() {
+        editMode = false;
     }
-    public void cancelAdd(){
-        produitToAdd=new Produit();
-        addMode=false;
+
+    public void prepareAdd() {
+        addMode = true;
+        editMode = false;
+    }
+
+    public void cancelAdd() {
+        produitToAdd = new Produit();
+        addMode = false;
     }
 
     public void addProduit() {
         if (produitToAdd != null) {
             produitToAdd.setCategorie(selectedCategorie);
+            if (file != null) {
+                String fileName = saveFile();
+                FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
+                produitToAdd.setPhoto(UPLOAD_DIR + File.separator + fileName);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
             produitService.addProduit(produitToAdd);
             System.out.println("Ajout de la catégorie avec Succès");
 
             addMessage(FacesMessage.SEVERITY_INFO, "Ajout Réussi", "Ajout de produit avec Succès");
-        }else {
+        } else {
             addMessage(FacesMessage.SEVERITY_WARN, "Ajout échoué", "Erreur lors de l'ajout de le produit");
         }
-        addMode=false;
+        addMode = false;
+        produitToAdd = new Produit();
     }
 
 
@@ -88,29 +92,44 @@ public class AdminProduits implements Serializable {
         return allCategories;
     }
 
-
-
+    private String saveFile() {
+        try {
+            String applicationPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("");
+            System.out.println(applicationPath);
+            File uploadsDir = new File(applicationPath + File.separator + UPLOAD_DIR);
+            if (!uploadsDir.exists()) {
+                uploadsDir.mkdir();
+            }
+            String fileName = file.getFileName();
+            File newFile = new File(uploadsDir, fileName);
+            try (InputStream input = file.getInputStream()) {
+                Files.copy(input, newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file.getFileName();
+    }
 
     public void updateProduit() {
         if (selectedProduit != null) {
             selectedProduit.setCategorie(selectedCategorie);
-            System.out.println("Updating... => "+ selectedProduit);
+            System.out.println("Updating... => " + selectedProduit);
             produitService.updateProduit(selectedProduit);
             System.out.println("Modification de produit avec Succès");
             addMessage(FacesMessage.SEVERITY_INFO, "Modification Réussie", "Modification de produit avec Succès");
-        }else {
+        } else {
             addMessage(FacesMessage.SEVERITY_WARN, "Modification échouée", "Erreur lors de la modification de produit");
         }
-        editMode=false;
+        editMode = false;
 
     }
 
     public void deleteProduit() {
-
         produitService.removeProduit(selectedProduit.getId());
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage("msgDel", new FacesMessage(FacesMessage.SEVERITY_INFO, "Produit Supprimée", selectedProduit.toString()));
-        allProduits=getAllProduits();
+        allProduits = getAllProduits();
     }
 
     //    !!
@@ -119,7 +138,6 @@ public class AdminProduits implements Serializable {
         categoryProducts = new ArrayList<Produit>(categ.getProduits());
         return categoryProducts;
     }
-
 
 
 //	public List<Produit> getCategoryProducts() {
@@ -155,6 +173,7 @@ public class AdminProduits implements Serializable {
     public void setProduitToAdd(Produit produitToAdd) {
         this.produitToAdd = produitToAdd;
     }
+
     public boolean isEditMode() {
         return editMode;
     }
@@ -173,10 +192,12 @@ public class AdminProduits implements Serializable {
     public void setAddMode(boolean addMode) {
         this.addMode = addMode;
     }
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
     }
+
     public List<Produit> getFilteredProduits() {
         return filteredProduits;
     }
@@ -212,10 +233,18 @@ public class AdminProduits implements Serializable {
     public void setAllProduits(List<Produit> allProduits) {
         this.allProduits = allProduits;
     }
+
     public Categorie getSelectedCategorie() {
         return selectedCategorie;
     }
 
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
 
     public void setSelectedCategorie(Categorie selectedCategorie) {
         this.selectedCategorie = selectedCategorie;

@@ -20,6 +20,16 @@ public class Produit implements Serializable {
 
 	private int sdr;
 
+	private String photo;
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
 	//bi-directional many-to-one association to Categorie
 	@ManyToOne
 	@JoinColumn(name="idCateg")

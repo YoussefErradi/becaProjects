@@ -16,7 +16,7 @@ public class ThemeSwitcher {
     public ThemeSwitcher () {
         
         checkedDBForTheme = false;
-        theme = "aristo";
+        theme = "hot-sneaks";
         
         themes = new TreeMap<String, String>();
         themes.put("Afterdark", "afterdark");
