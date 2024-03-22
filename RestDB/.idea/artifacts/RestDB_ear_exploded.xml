@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="RestDB:ear exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/RestDB_ear_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="RestDB/javaeeApplication/javaEEApplication" />
+    </root>
+  </artifact>
+</component>

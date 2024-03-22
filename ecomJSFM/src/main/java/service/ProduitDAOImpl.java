@@ -25,8 +25,7 @@ public class ProduitDAOImpl implements Serializable, ProduitDAO{
 	public ProduitDAOImpl() {
     }
 	
-	
-	
+
 	private final SessionFactory sessionFactory = getSessionFactory();
 
 	protected SessionFactory getSessionFactory() {
@@ -65,7 +64,7 @@ public class ProduitDAOImpl implements Serializable, ProduitDAO{
 	public List<Produit> listProduitsByCategorie(Categorie categ){
 		Session session = this.sessionFactory.getCurrentSession();
 		session.beginTransaction();
-		List<Produit> productsList = session.createQuery("from Produit p where p.categorie.idCat="+categ.getId(),Produit.class).list();
+		List<Produit> productsList = session.createQuery("from Produit p where p.categorie.id="+categ.getId(),Produit.class).list();
 		session.getTransaction().commit();
 		return productsList;
 	}

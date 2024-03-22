@@ -20,6 +20,7 @@ public class UserDAOImpl implements UserDAO {
         session.getTransaction().commit();
         session.close();
     }
+
     public void updateUser(User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -27,6 +28,7 @@ public class UserDAOImpl implements UserDAO {
         session.getTransaction().commit();
         session.close();
     }
+
     public List<User> listUsers() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -35,6 +37,7 @@ public class UserDAOImpl implements UserDAO {
         session.close();
         return users;
     }
+
     public User getUserById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -43,6 +46,7 @@ public class UserDAOImpl implements UserDAO {
         session.close();
         return user;
     }
+
     public void removeUser(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -51,6 +55,7 @@ public class UserDAOImpl implements UserDAO {
         session.getTransaction().commit();
         session.close();
     }
+
     public User getUserByLogin(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -61,6 +66,7 @@ public class UserDAOImpl implements UserDAO {
         session.close();
         return user;
     }
+
     public User getUserByLoginAndPassword(String name, String password) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
