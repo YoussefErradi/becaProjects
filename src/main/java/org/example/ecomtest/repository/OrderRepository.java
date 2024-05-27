@@ -1,5 +1,6 @@
 package org.example.ecomtest.repository;
 
+import org.example.ecomtest.enums.OrderStatus;
 import org.example.ecomtest.model.Order;
 import org.example.ecomtest.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findOrdersByProduct(@Param("product") Product product);
 
     @Query("SELECT o FROM Order o WHERE o.status = :status")
-    List<Order> findOrdersByStatus(@Param("status") String status);
+    List<Order> findOrdersByStatus(@Param("status") OrderStatus status);
 }

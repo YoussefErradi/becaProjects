@@ -1,5 +1,6 @@
 package org.example.ecomtest.service;
 
+import org.example.ecomtest.enums.OrderStatus;
 import org.example.ecomtest.model.Order;
 import org.example.ecomtest.model.Product;
 import org.example.ecomtest.repository.OrderRepository;
@@ -56,7 +57,8 @@ public class OrderService {
         return orderRepository.findOrdersByProduct(product);
     }
 
-    public List<Order> findOrdersByStatus(String status) {
+    public List<Order> findOrdersByStatus(OrderStatus status) {
         return orderRepository.findOrdersByStatus(status);
     }
+
 }

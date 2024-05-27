@@ -1,12 +1,13 @@
 package org.example.ecomtest.controller;
 
+import org.example.ecomtest.enums.OrderStatus;
 import org.example.ecomtest.model.Order;
 import org.example.ecomtest.model.Product;
 import org.example.ecomtest.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -49,16 +50,12 @@ public class OrderController {
     public Map<Product, List<Order>> getOrdersByProduct(@PathVariable Long productId) {
         Product product = orderService.findProductById(productId);
         List<Order> orders = orderService.findOrdersByProduct(product);
-        Map<Product, List<Order>> result = new HashMap<>();
-        result.put(product, orders);
-        return result;
+        return Collections.singletonMap(product, orders);
     }
 
     @GetMapping("/status/{status}")
-    public Map<String, List<Order>> getOrdersByStatus(@PathVariable String status) {
+    public Map<OrderStatus, List<Order>> getOrdersByStatus(@PathVariable OrderStatus status) {
         List<Order> orders = orderService.findOrdersByStatus(status);
-        Map<String, List<Order>> result = new HashMap<>();
-        result.put(status, orders);
-        return result;
+        return Collections.singletonMap(status, orders);
     }
 }

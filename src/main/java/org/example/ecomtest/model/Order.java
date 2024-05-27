@@ -1,6 +1,7 @@
 package org.example.ecomtest.model;
 
 import jakarta.persistence.*;
+import org.example.ecomtest.enums.OrderStatus;
 
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,8 @@ public class Order {
     private Long orderId;
     private Long customerId;
     private Date orderDate;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     private Double totalAmount;
 
     @OneToMany
@@ -22,7 +24,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long customerId, Date orderDate, String status, Double totalAmount, List<Product> products) {
+    public Order(Long customerId, Date orderDate, OrderStatus status, Double totalAmount, List<Product> products) {
         this.customerId = customerId;
         this.orderDate = orderDate;
         this.status = status;
@@ -54,11 +56,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
