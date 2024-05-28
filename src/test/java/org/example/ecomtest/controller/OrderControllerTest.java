@@ -18,6 +18,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The OrderControllerTest class provides tests for the OrderController class.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 class OrderControllerTest {
@@ -28,6 +31,10 @@ class OrderControllerTest {
     @MockBean
     private OrderService orderService;
 
+    /**
+     * Tests the createOrder method of the OrderController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void createOrder() throws Exception {
         Order mockOrder = new Order();
@@ -39,6 +46,10 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the findOrderById method of the OrderController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void findOrderById() throws Exception {
         Order mockOrder = new Order();
@@ -49,6 +60,10 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the updateOrder method of the OrderController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void updateOrder() throws Exception {
         Order mockOrder = new Order();
@@ -60,6 +75,10 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the deleteOrder method of the OrderController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void deleteOrder() throws Exception {
         mockMvc.perform(delete("/orders/1")
@@ -67,6 +86,10 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the findAllOrders method of the OrderController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void findAllOrders() throws Exception {
         when(orderService.findAllOrders()).thenReturn(Collections.emptyList());
@@ -76,6 +99,10 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the getOrdersByProduct method of the OrderController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void getOrdersByProduct() throws Exception {
         Product mockProduct = new Product();
@@ -88,6 +115,10 @@ class OrderControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the getOrdersByStatus method of the OrderController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void getOrdersByStatus() throws Exception {
         Order mockOrder = new Order();

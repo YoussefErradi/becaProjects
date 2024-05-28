@@ -16,6 +16,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * The ProductControllerTest class provides tests for the ProductController class.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 class ProductControllerTest {
@@ -26,6 +29,10 @@ class ProductControllerTest {
     @MockBean
     private ProductService productService;
 
+    /**
+     * Tests the createProduct method of the ProductController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void createProduct() throws Exception {
         Product mockProduct = new Product();
@@ -37,6 +44,10 @@ class ProductControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the findProductById method of the ProductController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void findProductById() throws Exception {
         Product mockProduct = new Product();
@@ -47,6 +58,10 @@ class ProductControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the updateProduct method of the ProductController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void updateProduct() throws Exception {
         Product mockProduct = new Product();
@@ -58,6 +73,10 @@ class ProductControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the deleteProduct method of the ProductController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void deleteProduct() throws Exception {
         mockMvc.perform(delete("/products/1")
@@ -65,6 +84,10 @@ class ProductControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Tests the findAllProducts method of the ProductController class.
+     * @throws Exception if an error occurs during the test
+     */
     @Test
     void findAllProducts() throws Exception {
         when(productService.findAllProducts()).thenReturn(Collections.emptyList());
